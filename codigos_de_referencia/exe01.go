@@ -1,3 +1,4 @@
+// Chamando a função Imprimindo duas vezes sequencial.
 package main
 
 import (
