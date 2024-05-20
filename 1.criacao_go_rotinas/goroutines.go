@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var wg sync.WaitGroup
+var wg sync.WaitGroup //Waitgroup serve para esperar que uma coleção de goroutines termine sua execução.
 
 func main() {
 	fmt.Println(runtime.NumCPU(), "Numero de Processadores") //numero de processadores
@@ -28,7 +28,7 @@ func func1() {
 		fmt.Println("func1: ", i)
 		time.Sleep(20)
 	}
-	//deu! Concluido
+	//deu! func1 Concluido
 	wg.Done()
 }
 
@@ -37,4 +37,6 @@ func func2() {
 		fmt.Println("func2: ", i)
 		time.Sleep(20)
 	}
+	//deu! func2 Concluido
+	wg.Done()
 }
