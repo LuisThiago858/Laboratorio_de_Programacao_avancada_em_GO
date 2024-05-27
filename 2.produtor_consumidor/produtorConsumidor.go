@@ -47,7 +47,7 @@ import (
 var wg sync.WaitGroup
 
 // capacidade do galpão que basicamente o buffer do canal
-const capacidadeGalpao = 20
+const capacidadeGalpao = 10
 
 // struct do produto
 type Produto struct {
@@ -66,11 +66,11 @@ func limparCanal(canal chan Produto) {
 // Função para preencher o canal ate a capacidade maxiama
 func preencherCanal(canal chan Produto) {
 	for i := 1; 1 <= capacidadeGalpao; i++ {
-		produto := Produto{
+		produto := Produto{ // Cria um novo produto com um ID e um nome
 			ID:          i,
 			NomeProduto: fmt.Sprintf("Conteudo da caixa %d", i),
 		}
-		canal <- produto
+		canal <- produto //aloca esse produto no canal
 		fmt.Printf("Preencheu o canal com o produto %v\n", produto)
 	}
 }
@@ -107,7 +107,7 @@ func main() {
 func produtor(canal chan Produto, wg *sync.WaitGroup) {
 	defer wg.Done() //Marca a conclusão da goroutine ao final
 
-	for i := 1; i <= 40; i++ {
+	for i := 1; i <= 20; i++ {
 		time.Sleep(time.Second) //Simula o tempo de produção
 		produto := Produto{     //armazena os valores da struct em uma variavel
 			ID:          i,
