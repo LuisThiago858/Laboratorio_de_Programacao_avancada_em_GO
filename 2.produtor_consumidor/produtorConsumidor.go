@@ -40,34 +40,19 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
+var wg sync.WaitGroup
+
+// capacidade do galpão que basicamente o buffer do canal
 const capacidadeGalpao = 20
 
+// struct do produto
 type Produto struct {
 	ID          int
 	NomeProduto string
-}
-
-func produtor(canal chan Produto) {
-	for i := 1; i <= 40; i++ {
-		time.Sleep(time.Second)
-		produto := Produto{
-			ID:          i,
-			NomeProduto: fmt.Sprintf("Conteudo do Produto %d", i),
-		}
-		canal <- produto
-		fmt.Printf("Produtor armazenou este produto %d\n", produto)
-	}
-	close(canal)
-}
-
-func consumidor(canal chan Produto) {
-	for produto := range canal {
-		time.Sleep(2 * time.Second)
-		fmt.Printf("Consumidor: Retirou este produto %v\n", produto)
-	}
 }
 
 func limparCanal(canal chan Produto) {
@@ -78,6 +63,7 @@ func limparCanal(canal chan Produto) {
 	fmt.Println("Canal limpo e fechado")
 }
 
+// Função para preencher o canal ate a capacidade maxiama
 func preencherCanal(canal chan Produto) {
 	for i := 1; 1 <= capacidadeGalpao; i++ {
 		produto := Produto{
@@ -91,17 +77,54 @@ func preencherCanal(canal chan Produto) {
 func main() {
 	canal := make(chan Produto, capacidadeGalpao)
 
-	go produtor(canal)
-
-	go consumidor(canal)
-
+	//inicia a goroutine de produtor
+	wg.Add(1)
+	go produtor(canal, &wg)
+	//inicia a gorountine de consumidor
+	wg.Add(1)
+	go consumidor(canal, &wg)
+	//Aguarda um tempo para preencher o canal
 	time.Sleep(15 * time.Second)
-
+	//exemplo de preenchimento do canal
 	preencherCanal(canal)
-
+	//aguarda um tempo para limpar o canal
 	time.Sleep(5 * time.Second)
 	//Exemplo de limpeza do canal
 	limparCanal(canal)
 	//Aguarda um tempo para que todas as goroutines terminem
 	time.Sleep(2 * time.Second)
+
+	//fecha o canal apos limpar para evitar que seja fechada diversas vezes
+	close(canal)
+	fmt.Println("Canal fechado")
+
+	//Aguarda a conclusão das goroutine
+	wg.Wait()
+	fmt.Println("Fim da execucao")
+}
+
+// Função Produtor que armazena produtos no canal
+func produtor(canal chan Produto, wg *sync.WaitGroup) {
+	defer wg.Done() //Marca a conclusão da goroutine ao final
+
+	for i := 1; i <= 40; i++ {
+		time.Sleep(time.Second) //Simula o tempo de produção
+		produto := Produto{     //armazena os valores da struct em uma variavel
+			ID:          i,
+			NomeProduto: fmt.Sprintf("Conteudo do Produto %d", i),
+		}
+		canal <- produto //ALoca o produto no canal
+		fmt.Printf("Produtor armazenou este produto %d\n", produto)
+	}
+	close(canal)
+}
+
+// Função consumidor que retira produtos do canal
+func consumidor(canal chan Produto, wg *sync.WaitGroup) {
+
+	defer wg.Done() //marca a conclusão da goroutine ao final
+	for produto := range canal {
+		time.Sleep(2 * time.Second) //Simula o tempo de consumo
+		fmt.Printf("Consumidor: Retirou este produto %v\n", produto)
+	}
 }
