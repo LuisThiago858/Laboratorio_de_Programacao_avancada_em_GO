@@ -35,3 +35,73 @@ trechos de codigo para não configurar plágio.
 
 
 */
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+const capacidadeGalpao = 20
+
+type Produto struct {
+	ID          int
+	NomeProduto string
+}
+
+func produtor(canal chan Produto) {
+	for i := 1; i <= 40; i++ {
+		time.Sleep(time.Second)
+		produto := Produto{
+			ID:          i,
+			NomeProduto: fmt.Sprintf("Conteudo do Produto %d", i),
+		}
+		canal <- produto
+		fmt.Printf("Produtor armazenou este produto %d\n", produto)
+	}
+	close(canal)
+}
+
+func consumidor(canal chan Produto) {
+	for produto := range canal {
+		time.Sleep(2 * time.Second)
+		fmt.Printf("Consumidor: Retirou este produto %v\n", produto)
+	}
+}
+
+func limparCanal(canal chan Produto) {
+	for len(canal) > 0 {
+		<-canal //remove produtos do canal ate que esvazie completamente
+	}
+	close(canal)
+	fmt.Println("Canal limpo e fechado")
+}
+
+func preencherCanal(canal chan Produto) {
+	for i := 1; 1 <= capacidadeGalpao; i++ {
+		produto := Produto{
+			ID:          i,
+			NomeProduto: fmt.Sprintf("Conteudo da caixa %d", i),
+		}
+		canal <- produto
+		fmt.Printf("Preencheu o canal com o produto %v\n", produto)
+	}
+}
+func main() {
+	canal := make(chan Produto, capacidadeGalpao)
+
+	go produtor(canal)
+
+	go consumidor(canal)
+
+	time.Sleep(15 * time.Second)
+
+	preencherCanal(canal)
+
+	time.Sleep(5 * time.Second)
+	//Exemplo de limpeza do canal
+	limparCanal(canal)
+	//Aguarda um tempo para que todas as goroutines terminem
+	time.Sleep(2 * time.Second)
+}
