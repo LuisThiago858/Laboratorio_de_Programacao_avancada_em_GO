@@ -85,7 +85,7 @@ func produtor(id int) {
 
 		mutex.Lock() //bloqueia o buffer
 		for len(buffer) == capacidadeGalpao {//verificar se o tamanho do buffer e igual capacidade no galpão
-			cond.Wait()//toda vez que essa condição e atingida ele bloqueia o buffer
+			cond.Wait()//toda vez que essa condição e atingida ele bloqueia o buffer5
 		}
 		buffer = append(buffer, produto) //o produto criado vai ao buffer
 		fmt.Printf("Produtor %d adicionou: %s\n", id, produto.NomeProduto)
