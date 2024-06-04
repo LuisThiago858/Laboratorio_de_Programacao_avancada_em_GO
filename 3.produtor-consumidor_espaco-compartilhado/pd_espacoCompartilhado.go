@@ -84,8 +84,8 @@ func produtor(id int) {
 		}
 
 		mutex.Lock() //bloqueia o buffer
-		for len(buffer) == capacidadeGalpao {
-			cond.Wait()
+		for len(buffer) == capacidadeGalpao {//verificar se o tamanho do buffer e igual capacidade no galpão
+			cond.Wait()//toda vez que essa condição e atingida ele bloqueia o buffer
 		}
 		buffer = append(buffer, produto) //o produto criado vai ao buffer
 		fmt.Printf("Produtor %d adicionou: %s\n", id, produto.NomeProduto)
@@ -97,10 +97,10 @@ func produtor(id int) {
 	}
 }
 
-func consumidor(id int) {
-	defer wg.Done()
+func consumidor(id int) {//inicia a função do consumidor
+	defer wg.Done()//avisa quando a ação do consumidor e finalizada
 	for i := 0; i < 5; i++ {
-		mutex.Lock()
+		mutex.Lock()//utiliza o mutex para bloquear o buffer
 
 		for len(buffer) == 0 {
 			cond.Wait()
