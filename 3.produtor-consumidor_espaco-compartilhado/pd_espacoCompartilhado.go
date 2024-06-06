@@ -45,49 +45,54 @@ import (
 	"time"
 )
 
+// WaitGroup para esperar a conclusão dos produtores e consumidores
 var wg sync.WaitGroup
 
-const capacidadeGalpao = 10
+const capacidadeGalpao = 10 //capacidade maxima do buffer
 
-type Produto struct {
+type Produto struct { //Estrutura de um produto
 	ID          int
 	NomeProduto string
 }
 
-var buffer []Produto
-var mutex = &sync.Mutex{}
-var cond = sync.NewCond(mutex)
+var buffer []Produto           //buffer compartilhado
+var mutex = &sync.Mutex{}      //Mutex para proteger o acesso ao buffer
+var cond = sync.NewCond(mutex) //Sincronização entre produtores e consumidores
 
+// Main
 func main() {
-	buffer = make([]Produto, 0, capacidadeGalpao) //iniciando o buffer
+	buffer = make([]Produto, 0, capacidadeGalpao) //iniciando o buffer com o tamanho do galpão
 
-	numeroProdutores := 3
-	numeroConsumidores := 2
+	numeroProdutores := 3   //numero de produtores
+	numeroConsumidores := 2 //numero de consumidores
 
-	wg.Add(numeroProdutores + numeroConsumidores) //inicializando o waitgroup
+	wg.Add(numeroProdutores + numeroConsumidores) //inicializando o waitgroup com o numero de totak de goroutines
+	//Iniciando a goroutine de produtores
 	for i := 1; i <= numeroProdutores; i++ {
 		go produtor(i)
 	}
+	//Iniciamos a goroutine de consumidores
 	for i := 1; i <= numeroConsumidores; i++ {
 		go consumidor(i)
 	}
 
-	wg.Wait()
+	wg.Wait() //espera até que todas as goroutines estejam terminadas
 }
 
+// função produto
 func produtor(id int) {
-	defer wg.Done()
+	defer wg.Done() //diz que essa será a ultima função que sera executada avisando que ela foi concluida
 	for i := 0; i < 5; i++ {
-		produto := Produto{ //criando um produto
-			ID:          id*100 + i,
-			NomeProduto: fmt.Sprintf("produto : %d", id*100+1),
+		produto := Produto{ //criando um produto novo
+			ID:          id*100 + i,                            //id multiplicado por cem  mais o i do for
+			NomeProduto: fmt.Sprintf("produto : %d", id*100+1), //o nome do produto e o seu id
 		}
 
-		mutex.Lock() //bloqueia o buffer
-		for len(buffer) == capacidadeGalpao {//verificar se o tamanho do buffer e igual capacidade no galpão
-			cond.Wait()//toda vez que essa condição e atingida ele bloqueia o buffer5
+		mutex.Lock()                          //bloqueia o acesso ao buffer
+		for len(buffer) == capacidadeGalpao { //espera até ter espaco disponivel no buffer
+			cond.Wait()
 		}
-		buffer = append(buffer, produto) //o produto criado vai ao buffer
+		buffer = append(buffer, produto) //o produto e adicionado ao buffer
 		fmt.Printf("Produtor %d adicionou: %s\n", id, produto.NomeProduto)
 
 		cond.Signal()  //Avisa sobre itens novos no buffer
@@ -97,23 +102,26 @@ func produtor(id int) {
 	}
 }
 
-func consumidor(id int) {//inicia a função do consumidor
-	defer wg.Done()//avisa quando a ação do consumidor e finalizada
+// função consumidor
+func consumidor(id int) {
+	defer wg.Done() //diz que essa será a ultima função que sera executada avisando que ela foi concluida
 	for i := 0; i < 5; i++ {
-		mutex.Lock()//utiliza o mutex para bloquear o buffer
+		mutex.Lock() //Bloqueia o acesso ao buffer
 
+		//espera que tenha ao menos um item no buffer
 		for len(buffer) == 0 {
 			cond.Wait()
 		}
 
+		//retira o produto do buffer, decrementa o buffer e printa o quem retirou e o que retirou
 		produto := buffer[0]
 		buffer = buffer[1:]
 		fmt.Printf("Consumidor %d retirou: %s\n", id, produto.NomeProduto)
 
-		cond.Signal()
+		cond.Signal() //sinaliza que tem espaco no buffer
 
-		mutex.Unlock()
+		mutex.Unlock() //bloqueia o acesso ao buffer
 
-		time.Sleep(time.Millisecond * 500)
+		time.Sleep(time.Millisecond * 500) //simula o tempo para processar a retirada do item
 	}
 }
