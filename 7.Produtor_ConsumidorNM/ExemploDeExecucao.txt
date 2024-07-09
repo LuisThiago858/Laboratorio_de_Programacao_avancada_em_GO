@@ -1,0 +1,12 @@
+Cliente 2 consumindo pedido 3: Pizza (Mesa 9)
+Cliente 1 consumindo pedido 1: Strogonoff (Mesa 6)
+Cliente 3 consumindo pedido 2: Strogonoff (Mesa 8)
+Cliente 4 consumindo pedido 3: Picanha (Mesa 4)
+Cliente 5 consumindo pedido 3: Picanha (Mesa 1)
+Cliente 2 consumindo pedido 2: Lasanha (Mesa 9)
+Cliente 1 consumindo pedido 1: Lasanha (Mesa 1)
+Cliente 3 consumindo pedido 2: Picanha (Mesa 3)
+Cliente 4 consumindo pedido 3: Strogonoff (Mesa 1)
+Cliente 5 consumindo pedido 1: Feijoada (Mesa 10)
+Cozinheiro 2 finalizado
+Cliente 2 consumindo pedido 2: Pizza (Mesa 5)

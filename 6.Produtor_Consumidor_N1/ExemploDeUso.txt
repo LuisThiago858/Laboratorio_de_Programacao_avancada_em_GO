@@ -1,0 +1,44 @@
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 2, Mensagem = Mensagem do Produtor 2
+Consumidor recebeu: ID = 1, Mensagem = Mensagem do Produtor 1
+Consumidor recebeu: ID = 3, Mensagem = Mensagem do Produtor 3
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Consumidor recebeu: ID = 4, Mensagem = Mensagem do Produtor 4
+Produtor 1 finalizado
+Produtor 2 finalizado
+Produtor 3 finalizado
+Produtor 4 finalizado
