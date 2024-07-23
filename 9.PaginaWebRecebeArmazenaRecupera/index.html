@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Store and Retrieve Data</title>
+    <title>Armazenar e Recuperar Dados</title>
 </head>
 <body>
-    <h1>Store Data</h1>
+    <h1>Armazenar Dado</h1>
     <form action="/save" method="post">
         <label for="key">Key:</label>
         <input type="text" id="key" name="key" required><br>
-        <label for="value">Value:</label>
+        <label for="value">Valor:</label>
         <input type="text" id="value" name="value" required><br>
-        <button type="submit">Save</button>
+        <button type="submit">Salvar</button>
     </form>
-    <h1>Retrieve Data</h1>
+    <h1>Recuperar Dado</h1>
     <form action="/retrieve" method="get">
         <label for="key">Key:</label>
         <input type="text" id="key" name="key" required><br>
-        <button type="submit">Retrieve</button>
+        <button type="submit">Recuperar</button>
     </form>
 </body>
 </html>
